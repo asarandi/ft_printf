@@ -1,0 +1,33 @@
+/*--------------------------------------------*/
+your function must be called ft_printf
+your project must be written according to the norm
+you have to handle errors carefully. in no way can your program quit in an unexpected manner (segmentation fault, bus error, double free, etc)
+you must submit a makefile which will compile a libftprintf.a this lib will be linked to our testing main to give you your results
+you'll have to submit a file called author containing your username followed by a '\n' at the root of your repository
+you are allowed to use the following function:
+	* write
+	* malloc
+	* free
+	* exit
+	* the functions of man 3 stdarg
+
+/*--------------------------------------------*/
+you have to recode libc's printf function
+your function will be called ft_printf and will be prototyped similarly to printf
+you won't do the buffer management in the printf function
+you have to manage the following conversions sSpdDioOuUxXcC
+you must manage %%
+you must manage the flags #0-+ and space
+you must manage the minimum field-width
+you must manage the precision
+you must manage the flags hh, h, l, ll, j, z
+
+man 3 printf / man 3 stdarg
+
+/*--------------------------------------------*/
+more detailed conversions management eE, fF, gG, aA, n
+more detailed flags management: *, $, L, '
+non-existing flags management: %b to print in binary, %r to print a string of non-printable characters, %k to print a date in any ordinary ISO format, etc
+management of alter tools for colors, fd, or other fun stuff like that
+printf("Le fichier{cyan}%s{eoc} contient : {red}%s{eoc}", filename, str)
+
