@@ -31,3 +31,38 @@ non-existing flags management: %b to print in binary, %r to print a string of no
 management of alter tools for colors, fd, or other fun stuff like that
 printf("Le fichier{cyan}%s{eoc} contient : {red}%s{eoc}", filename, str)
 
+//
+//    s S p d D i o O u U x X c C
+//
+//    %s = char *             - null terminated string
+//    %S = wchar_t *          - wide char string ?
+//    %p = void *             - printed in hexadecimal, %#x, %#lx
+//    %d = int	              - signed decimal (32 bit)
+//    %D = long int           - signed decimal (64 bit)
+//    %i = int                - signed decimal (32 bit) same like %d
+//    %o = unsigned int       - unsigned octal (32 bit)
+//    %O = unsigned long int  - unsigned octal (64 bit)
+//    %u = unsigned int       - unsigned decimal (32 bit)
+//    %U = unsigned long int  - unsigned decimal (64 bit)
+//    %x = unsigned int       - unsigned hexadecimal, lowercase
+//    %X = unsigned int       - unsigned hexadecimal, uppercase
+//    %c = int                - int converted to unsigned char
+//    %C = wchar_t            - c with l (ell) modifier
+//
+//
+//     %[parameter][flags][width][.precision][length]type
+//
+//
+/////////////////////////////////////////////////////////////////////
+
+You must manage the flags hh, h, l, ll, j, z
+
+
+	hh	int;	
+	h	int;	
+	l	long;	
+	ll	long long;	
+	z	size_t;	
+	j	intmax_t;	
+	t	ptrdiff_t;
+
