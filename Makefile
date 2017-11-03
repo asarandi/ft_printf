@@ -6,16 +6,20 @@
 #    By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/30 09:00:12 by asarandi          #+#    #+#              #
-#    Updated: 2017/11/01 16:17:28 by asarandi         ###   ########.fr        #
+#    Updated: 2017/11/03 02:00:17 by asarandi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= libftprintf.a
 CFLAGS	= -Wall -Werror -Wextra
-FILES	= $(wildcard *.c)
+FILES	= ft_printf.c \
+		  libft_functions.c \
+		  parse_placeholder.c \
+		  print_number.c
 OBJ		= $(FILES:.c=.o)
 SONAME	= libftprintf.so
-INC		= libftprintf.h
+INC		= libftprintf.h \
+		  ft_binary_byte.h
 
 all:	$(NAME)
 
@@ -34,7 +38,7 @@ debug:
 
 test:
 	rm -f test1
-	gcc -g test1.c ft_printf.c process_placeholder.c -o test1
+	gcc -g test1.c $(FILES) -o test1
 
 clean:
 	rm -f $(OBJ)
