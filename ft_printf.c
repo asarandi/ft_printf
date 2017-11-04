@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 09:21:32 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/03 18:15:09 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/04 03:42:50 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,28 @@
 
 int	ft_printf(const char *restrict format, ...)
 {
-	unsigned long long int	x;
 	char	*fmt;
+	char	*output;
 	va_list	ap;
 
+	int	count;
+
 	va_start(ap, format);
-		while (*format)
-		{ 
+	count = 0;
+	while (*format)
+	{ 
 			while ((*format) && (*format != '%'))
+			{
 				write(1, format++, 1);
+				count++;
+			}
 			if (*format == '%')
 			{
 				if (*(format + 1) == '%')
+				{
 					write(1, "%", 1);
+					count++;
+				}
 				else
 				{	
 					fmt = (char *)format;
@@ -38,14 +47,14 @@ int	ft_printf(const char *restrict format, ...)
 					if (length == 0)
 						length = printf_get_default_length(fmt);
 
-					char *output;
 					uintmax_t	n;
 					if (printf_is_numeric(fmt))
 					{
-						char sign = '+';
+						char sign[] = "+";
+
 						n = (uintmax_t)va_arg(ap, uintmax_t);
 						if (printf_is_decimal(fmt))
-							output = print_decimal(n, length, printf_is_signed(fmt), &sign);
+							output = print_decimal(n, length, printf_is_signed(fmt), &sign[0]);
 						else
 							output = print_octohex(n, length, printf_get_base(fmt));
 
@@ -60,13 +69,13 @@ int	ft_printf(const char *restrict format, ...)
 						if (*fmt == 'p')
 							flags |= 1 << 0; //FLAG_HASHTAG for type 'p'
 
-						if (width > ft_strlen(output)) //// width
+						if (width > (int) ft_strlen(output)) //// width
 						{
 							if (printf_is_signed(fmt))
 							{
-								if ((flags & FLAG_PLUS) || (sign == '-'))
+								if ((flags & FLAG_PLUS) || (*sign == '-'))
 									width--;
-								if ((flags & FLAG_SPACE) && (sign == '+'))
+								if ((flags & FLAG_SPACE) && (*sign == '+'))
 									width--;
 							}
 							if ((flags & FLAG_HASHTAG) && ((*fmt == 'x') || (*fmt == 'X')))
@@ -75,12 +84,12 @@ int	ft_printf(const char *restrict format, ...)
 								width--;
 							if (flags & FLAG_ZERO)
 							{
-								while (width > ft_strlen(output))
+								while (width > (int) ft_strlen(output))
 									output = printf_string_prefix(output, "0");
 							}
 							if (flags & FLAG_MINUS) //FLAG MINUS
 							{
-								while (width > ft_strlen(output))
+								while (width > (int) ft_strlen(output))
 									output = printf_string_suffix(output, " ");
 							}
 						}
@@ -94,26 +103,23 @@ int	ft_printf(const char *restrict format, ...)
 						if ((flags & FLAG_HASHTAG) && ((*fmt == 'o') || (*fmt == 'O')))
 							output = printf_string_prefix(output, "0");
 						
-						if (((flags & FLAG_PLUS) && (printf_is_signed(fmt))) || (sign == '-'))
-							output = printf_string_prefix(output, &sign);
+						if (((flags & FLAG_PLUS) && (printf_is_signed(fmt))) || (*sign == '-'))
+							output = printf_string_prefix(output, sign);
 						if ((flags & FLAG_SPACE) && (printf_is_signed(fmt)))
 							output = printf_string_prefix(output, " ");
-						while (width > ft_strlen(output))
+						while (width > (int) ft_strlen(output))
 							output = printf_string_prefix(output, " ");
 
-
 					}
-
-
-
-						
-
 						write(1, output, ft_strlen(output));
+						count += ft_strlen(output);
 						free(output);
-						*(fmt)++;
+						fmt++;
 						format = fmt;
 				}
 			}
 		}
-		return (0);
+		va_end(ap);
+		return (count);
+
 }

@@ -6,29 +6,29 @@
 #    By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/30 09:00:12 by asarandi          #+#    #+#              #
-#    Updated: 2017/11/03 02:00:17 by asarandi         ###   ########.fr        #
+#    Updated: 2017/11/04 03:27:48 by asarandi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= libftprintf.a
-CFLAGS	= -Wall -Werror -Wextra
+CFLAGS	= -g -Wall -Werror -Wextra -I. -c
 FILES	= ft_printf.c \
 		  libft_functions.c \
-		helper_functions.c \
-		helper_functions_2.c \
-		  parse_placeholder.c \
+		  helper_functions.c \
+		  helper_functions_2.c \
+		   parse_placeholder.c \
 		  print_number.c
-OBJ		= $(FILES:.c=.o)
+OBJ		= $(FILES:%.c=%.o)
 SONAME	= libftprintf.so
 INC		= libftprintf.h \
 		  ft_binary_byte.h
 
-all:	$(NAME)
+all: $(NAME)
 
-$(NAME):	$(OBJ)
+$(NAME): $(OBJ)
 	ar rcs $(NAME) $(OBJ)
 
-$(OBJ):
+$(OBJ): $(FILES)
 	gcc $(CFLAGS) $(FILES)
 
 norm:
@@ -38,16 +38,15 @@ debug:
 	gcc -g -c -fPIC $(FILES)
 	gcc -g -shared -fPIC $(OBJ) -o $(SONAME)
 
-test:
+test: re
+	rm -rf $(OBJ)
 	rm -f test1
-	gcc -g test1.c $(FILES) -o test1
+	gcc -g test1.c -L. -lftprintf -o test1
 
 clean:
-	rm -f $(OBJ)
+	rm -rf $(OBJ)
 
-fclean:
-	clean
-	rm -f $(NAME) $(SONAME)
+fclean: clean
+	rm -rf $(NAME) $(SONAME)
 
-re:
-	fclean all
+re: fclean all

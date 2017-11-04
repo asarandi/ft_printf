@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 09:37:11 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/03 18:12:56 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/04 03:48:44 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@
 # include <limits.h>
 
 # define FLAG_HASHTAG	1
-# define FLAG_ZERO	2
-# define FLAG_MINUS	4
-# define FLAG_SPACE	8
-# define FLAG_PLUS	16
+# define FLAG_ZERO		2
+# define FLAG_MINUS		4
+# define FLAG_SPACE		8
+# define FLAG_PLUS		16
 
-char			*ft_strtoupper(char *s);
-char			*printf_string_prefix(char *string, char *prefix);
-char			*printf_string_suffix(char *string, char *suffix);
+char		*ft_strtoupper(char *s);
+char		*printf_string_prefix(char *string, char *prefix);
+char		*printf_string_suffix(char *string, char *suffix);
 int			printf_is_numeric(char *fmt);
 int			printf_get_default_length(char *fmt);
 int			printf_is_signed(char *fmt);

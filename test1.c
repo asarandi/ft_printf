@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 13:29:06 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/03 18:37:14 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/04 03:55:38 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,22 @@ int	main()
 //free(mem);
 
 
-ft_printf("%010d  %#08x %p\n", 12345, 666, &ft_printf);
 
-printf("%010d  %#08x %p\n\n", 12345, 666, &ft_printf);
+
+/*
+ft_printf("%010d  %#08x %p\n", 12345, 666, &ft_printf);
+   printf("%010d  %#08x %p\n", 12345, 666, &ft_printf);
+ft_printf("%zd%zd\n", 0, 42);
+   printf("%zd%zd\n", 0, 42);
+
+ft_printf("%hhd%hhd\n", 1, 42);
+   printf("%hhd%hhd\n", 1, 42);
+*/
+ft_printf("%hhd - %hhd\n", SHRT_MAX - 42, SHRT_MAX - 4200);
+   printf("%hhd - %hhd\n", SHRT_MAX - 42, SHRT_MAX - 4200);
+
+ft_printf("%.4d\n", -42);
+   printf("%.4d\n", -42);
 
 
 
