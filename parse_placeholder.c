@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/01 15:55:33 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/03 15:49:59 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/03 18:30:40 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,11 @@ int	get_placeholder_length(char **fmt)
 	int	length;
 
 	length = 0;
-	if ((**fmt == 'h') && (**fmt + 1 == 'h'))
+	if ((**fmt == 'h') && ((*(fmt))[1] == 'h'))
 		length = sizeof(char) * CHAR_BIT;
 	else if (**fmt == 'h')
 		length = sizeof(short) * CHAR_BIT;
-	else if ((**fmt == 'l') && (**fmt + 1 == 'l'))
+	else if ((**fmt == 'l') && ((*(fmt))[1] == 'l'))
 		length = sizeof(long long) * CHAR_BIT;
 	else if (**fmt == 'l')
 		length = sizeof(long) * CHAR_BIT;
@@ -102,9 +102,9 @@ int	get_placeholder_length(char **fmt)
 		length = sizeof(ptrdiff_t) * CHAR_BIT;
 	else if (**fmt == 'z')
 		length = sizeof(size_t) * CHAR_BIT;
-	if ((**fmt == 'h') && (**fmt + 1 == 'h'))
+	if ((**fmt == 'h') && ((*(fmt))[1] == 'h'))
 		(*fmt)++;
-	else if ((**fmt == 'l') && (**fmt + 1 == 'l'))
+	else if ((**fmt == 'l') && ((*(fmt))[1] == 'l'))
 		(*fmt)++;
 	if (length)
 		(*fmt)++;

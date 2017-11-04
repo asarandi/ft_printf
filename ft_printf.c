@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 09:21:32 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/03 17:24:25 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/03 18:15:09 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	ft_printf(const char *restrict format, ...)
 			if (*format == '%')
 			{
 				if (*(format + 1) == '%')
-					write(1, '%', 1);
+					write(1, "%", 1);
 				else
 				{	
 					fmt = (char *)format;
@@ -94,64 +94,23 @@ int	ft_printf(const char *restrict format, ...)
 			        int width = get_placeholder_width(&fmt, &ap);
 					int precision = get_placeholder_precision(&fmt, &ap);
 					int length = get_placeholder_length(&fmt);
+					if (length == 0)
+						length = printf_get_default_length(fmt);
+
 					char *output;
 					uintmax_t	n;
-					if ((*fmt == 'd') || (*fmt == 'i'))
+					if (printf_is_numeric(fmt))
 					{
-						n = (uintmax_t)va_arg(*ap, int);
-						if (length == 0)
-							length = sizeof(int) * CHAR_BIT;
-						output = print_decimal(n, length, 1);
+						n = (uintmax_t)va_arg(ap, uintmax_t);
+						if (printf_is_decimal(fmt))
+							output = print_decimal(n, length, printf_is_signed(fmt));
+						else
+							output = print_octohex(n, length, printf_get_base(fmt));
+						printf("%s", output);
+						free(output);
 					}
-					else if (*fmt == 'D')
-					{
-						n = (uintmax_t)va_arg(*ap, long);
-						if (length == 0)
-							length = sizeof(long) * CHAR_BIT;
-						output = print_decimal(n, length, 1);
-					}
-					else if (*fmt == 'o')
-					{
-						n = (uintmax_t)va_arg(*ap, unsigned int);
-						if (length == 0)
-							length = sizeof(unsigned int) * CHAR_BIT;
-						output = print_octohex(n, length, 8);
-					}
-					else if (*fmt == 'O')
-					{
-						n = (uintmax_t)va_arg(*ap, unsigned long);
-						if (length == 0)
-							length = sizeof(unsigned long) * CHAR_BIT;
-						output = print_octohex(n, length, 8);
-					}
-					else if (*fmt == 'u')
-					{
-						n = (uintmax_t)va_arg(*ap, unsigned int);
-						if (length == 0)
-							length = sizeof(unsigned int) * CHAR_BIT;
-						output = print_decimal(n, length, 0);
-					}
-					else if (*fmt == 'U')
-					{
-						n = (uintmax_t)va_arg(*ap, unsigned long);
-						if (length == 0)
-							length = sizeof(unsigned long) * CHAR_BIT;
-						output = print_decimal(n, length, 0);
-					}
-					else if ((*fmt == 'x') || (*fmt == 'X'))
-					{
-						n = (uintmax_t)va_arg(*ap, unsigned int);
-						if (length == 0)
-							length = sizeof(unsigned int) * CHAR_BIT;
-						output = print_octohex(n, 
-					}
-
-						
-
-
-
-
 				}
 			}
 		}
+		return (0);
 }
