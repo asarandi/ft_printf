@@ -14,6 +14,8 @@ NAME	= libftprintf.a
 CFLAGS	= -Wall -Werror -Wextra
 FILES	= ft_printf.c \
 		  libft_functions.c \
+		helper_functions.c \
+		helper_functions_2.c \
 		  parse_placeholder.c \
 		  print_number.c
 OBJ		= $(FILES:.c=.o)

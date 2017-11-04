@@ -23,12 +23,17 @@ int	main()
 //
 //printf("%jd\n", (uintmax_t) INT32_MIN);
 
-char *mem = print_octohex(0xff, 8, 8);
-printf("%s\n", mem);
-free(mem);
+//char *mem = print_octohex(0xff, 8, 8);
+//printf("%s\n", mem);
+//free(mem);
 
 
-ft_printf("%hu", (short) -1);
+ft_printf("%010d  %#08x %p\n", 12345, 666, &ft_printf);
+
+printf("%010d  %#08x %p\n\n", 12345, 666, &ft_printf);
+
+
+
 //ft_printf("%lld", -1);
 
 //printf("hello%juworld\n", (uintmax_t) -1 );

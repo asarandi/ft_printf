@@ -44,14 +44,17 @@ int			check_negative(uintmax_t *n, int number_of_bits, int signedness)
 	return (negative);
 }
 
-char		*print_decimal(uintmax_t n, int number_of_bits, int signedness)
+char		*print_decimal(uintmax_t n, int number_of_bits, int signedness, char *sign)
 {
 	int		negative;
 	int		i;
 	char	buffer[32];
 	char	*result;
 
-	negative = check_negative(&n, number_of_bits, signedness);
+	if ((negative = check_negative(&n, number_of_bits, signedness)) == 1)
+		*sign = '-';
+	else
+		*sign = '+';
 	n = trim_bits(n, number_of_bits);
 	i = 31;
 	buffer[i--] = 0;
@@ -62,8 +65,6 @@ char		*print_decimal(uintmax_t n, int number_of_bits, int signedness)
 		buffer[i--] = (n % 10) + '0';
 		n /= 10;
 	}
-	if (negative)
-		buffer[i--] = '-';
 	i++;
 	result = ft_memalloc(ft_strlen(&buffer[i]) + 1);
 	if (result == NULL)

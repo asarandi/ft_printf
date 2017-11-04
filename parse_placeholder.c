@@ -21,16 +21,16 @@ int	get_placeholder_flags(char **fmt)
 		(*fmt)++;
 	while (**fmt)
 	{
-		if (**fmt == '+')
-			flags |= B00000001;
-		else if (**fmt == '-')
-			flags |= B00000010;
-		else if (**fmt == ' ')
-			flags |= B00000100;
-		else if (**fmt == '#')
-			flags |= B00001000;
+		if (**fmt == '#')
+			flags |= FLAG_HASHTAG;
 		else if (**fmt == '0')
-			flags |= B00010000;
+			flags |= FLAG_ZERO;
+		else if (**fmt == '-')
+			flags |= FLAG_MINUS;
+		else if (**fmt == ' ')
+			flags |= FLAG_SPACE;
+		else if (**fmt == '+')
+			flags |= FLAG_PLUS;
 		else
 			return (flags);
 		(*fmt)++;

@@ -12,6 +12,22 @@
 
 #include "libftprintf.h"
 
+char	*ft_strtoupper(char *s)
+{
+	size_t	i;
+	size_t	k;
+
+	i = ft_strlen(s);
+	k = 0;
+	while (k < i)
+	{
+		if ((s[k] >= 'a') && (s[k] <= 'z'))
+			s[k] = s[k] - 0x20;
+		k++;
+	}
+	return (s);
+}
+
 size_t	ft_strlen(const char *s)
 {
 	int i;
