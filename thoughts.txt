@@ -57,12 +57,49 @@ printf("Le fichier{cyan}%s{eoc} contient : {red}%s{eoc}", filename, str)
 
 You must manage the flags hh, h, l, ll, j, z
 
+lengths:
 
-	hh	int;	
-	h	int;	
-	l	long;	
-	ll	long long;	
-	z	size_t;	
-	j	intmax_t;	
-	t	ptrdiff_t;
+	hh	int;  --> output char, 8 bit
+	h	int;  --> output short, 16 bit
+	l	long; --> output long, 64 bits
+	ll	long long; --> 64 bits
+	z	size_t;	--> 64 bits, signed/unsigned
+	j	intmax_t; --> 64 bits, signed/unsigned
+	t	ptrdiff_t; --> 64 bits, unsigned
+
+/////////////////////////////////////////////////////////////////////
+
+flags:
+# For o conversions, the precision of the number is increased to
+  force the first character of the output string to a zero.
+  For x and X conversions, a non-zero result has 
+  the string `0x' (or `0X' for X conversions) prepended to it.
+
+0 Zero padding. For all conversions except n, the converted value is
+  padded on the left with zeros rather than blanks. If a precision is
+  given with a numeric conversion (d, i, o, u, i, x, and X),
+  the 0 flag is ignored.
+
+- the converted value is to be left adjusted on the field boundary.
+  Except for n conversions, the converted value is padded on the right
+  with blanks, rather than  on the left with blanks or zeros.
+  A - overrides a 0 if both are given.
+
+` ' (space) A blank should be left before a positive number produced
+     by a signed conversion (a, A, d, e, E, f, F, g, G, or i).
+
++ A sign must always be placed before a number produced by a 
+  signed conversion.  A + overrides a space if both are used.
+
+/////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
 

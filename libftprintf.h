@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 09:37:11 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/03 01:55:39 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/03 14:12:43 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdarg.h>
 # include <stddef.h>
 # include <stdint.h>
+# include <limits.h>
 # include "ft_binary_byte.h"
 
 uintmax_t	trim_bits(uintmax_t n, int number_of_bits);
