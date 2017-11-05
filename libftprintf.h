@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 09:37:11 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/04 03:48:44 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/04 18:56:47 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # define FLAG_SPACE		8
 # define FLAG_PLUS		16
 
+int			wchar_to_utf8(unsigned int wchar, unsigned char *output);
 char		*ft_strtoupper(char *s);
 char		*printf_string_prefix(char *string, char *prefix);
 char		*printf_string_suffix(char *string, char *suffix);

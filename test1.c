@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 13:29:06 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/04 03:55:38 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/04 19:25:18 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ ft_printf("%zd%zd\n", 0, 42);
 ft_printf("%hhd%hhd\n", 1, 42);
    printf("%hhd%hhd\n", 1, 42);
 */
+
 ft_printf("%hhd - %hhd\n", SHRT_MAX - 42, SHRT_MAX - 4200);
    printf("%hhd - %hhd\n", SHRT_MAX - 42, SHRT_MAX - 4200);
 

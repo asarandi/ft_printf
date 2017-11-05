@@ -6,7 +6,7 @@
 #    By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/30 09:00:12 by asarandi          #+#    #+#              #
-#    Updated: 2017/11/04 03:27:48 by asarandi         ###   ########.fr        #
+#    Updated: 2017/11/04 19:25:28 by asarandi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ FILES	= ft_printf.c \
 		  libft_functions.c \
 		  helper_functions.c \
 		  helper_functions_2.c \
-		   parse_placeholder.c \
+		  parse_placeholder.c \
+		  wchar_to_utf8.c \
 		  print_number.c
 OBJ		= $(FILES:%.c=%.o)
 SONAME	= libftprintf.so
@@ -41,7 +42,7 @@ debug:
 test: re
 	rm -rf $(OBJ)
 	rm -f test1
-	gcc -g test1.c -L. -lftprintf -o test1
+	gcc -g test2.c -L. -lftprintf -o test1
 
 clean:
 	rm -rf $(OBJ)

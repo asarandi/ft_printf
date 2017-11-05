@@ -6,15 +6,23 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 09:21:32 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/04 03:42:50 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/04 19:39:51 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "libftprintf.h"
+#include <locale.h>
+
+//
+//fix precision
+//fix c C
+//fix s S
+//
 
 int	ft_printf(const char *restrict format, ...)
 {
+	setlocale(LC_ALL, "");
 	char	*fmt;
 	char	*output;
 	va_list	ap;
@@ -110,12 +118,69 @@ int	ft_printf(const char *restrict format, ...)
 						while (width > (int) ft_strlen(output))
 							output = printf_string_prefix(output, " ");
 
-					}
 						write(1, output, ft_strlen(output));
 						count += ft_strlen(output);
 						free(output);
 						fmt++;
 						format = fmt;
+
+					}
+					else {
+						if ((*fmt == 'c') && (length <= 32))
+						{
+							unsigned char c;
+							c = (unsigned char) va_arg(ap, int);
+							write(1, &c, 1);
+							count++;
+							fmt++;
+							format = fmt;
+						}
+						else if ((*fmt == 'C') || ((*fmt == 'c') && (length > 32)))
+						{
+							wchar_t	w;
+							unsigned char utf8[4];
+							int utf8_out;
+							w = va_arg(ap, wchar_t);
+							utf8_out = wchar_to_utf8((unsigned int) w, utf8);
+							write(1, utf8, utf8_out);
+							count += utf8_out;
+							fmt++;
+							format = fmt;
+						}
+						else if ((*fmt == 's') && (length <= 32))
+						{
+							output = (char *) va_arg(ap, char *);
+							if (output){
+							int max = ft_strlen(output);
+							if (precision)
+								max = precision;
+							int l = 0;
+							while(l < max)
+							{
+								write(1, &output[l++], 1);
+								count++;
+							}}
+							fmt++;
+							format = fmt;
+
+						}
+						else if ((*fmt == 'S') || ((*fmt == 's') && (length > 32)))
+						{
+							wchar_t *w_string = va_arg(ap, wchar_t *);
+							if (w_string != NULL){
+							unsigned char utf8[4];
+							int utf8_out;
+							while (*w_string)
+							{
+								utf8_out = wchar_to_utf8((unsigned int) *w_string, utf8);
+								write(1, utf8, utf8_out);
+								count += utf8_out ;
+								w_string++;
+							}}
+							fmt++;
+							format = fmt;		
+						}
+					}
 				}
 			}
 		}
