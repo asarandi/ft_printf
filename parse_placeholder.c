@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/01 15:55:33 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/03 18:30:40 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/05 01:52:11 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,13 @@ int	get_placeholder_flags(char **fmt)
 	return (flags);
 }
 
-int	get_placeholder_width(char **fmt, va_list *ap)
+int	get_placeholder_width(char **fmt, va_list *ap, int *have_width)
 {
 	int	width;
 
 	if (**fmt == '*')
 	{
+		*have_width = 1;
 		(*fmt)++;
 		return ((int)va_arg(*ap, int));
 	}
@@ -55,17 +56,20 @@ int	get_placeholder_width(char **fmt, va_list *ap)
 			width = (width * 10) + (**fmt - '0');
 			(*fmt)++;
 		}
+		if (width)
+			*have_width = 1;
 		return (width);
 	}
 }
 
-int	get_placeholder_precision(char **fmt, va_list *ap)
+int	get_placeholder_precision(char **fmt, va_list *ap, int *have_precision)
 {
 	int	precision;
 
 	if (**fmt != '.')
-		return (0);
+		return (-1);
 	(*fmt)++;
+	*have_precision = 1;
 	if (**fmt == '*')
 	{
 		(*fmt)++;

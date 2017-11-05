@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/03 01:26:48 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/03 01:50:51 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/05 01:22:04 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ char		*print_decimal(uintmax_t n, int number_of_bits, int signedness, char *sign
 	else
 		*sign = '+';
 	n = trim_bits(n, number_of_bits);
+
 	i = 31;
 	buffer[i--] = 0;
 	if (n == 0)

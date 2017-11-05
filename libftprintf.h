@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 09:37:11 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/04 18:56:47 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/05 01:52:32 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ size_t		ft_strlen(const char *s);
 void		*ft_memcpy(void *dest, const void *src, size_t n);
 void		*ft_memalloc(size_t size);
 int			get_placeholder_flags(char **fmt);
-int			get_placeholder_width(char **fmt, va_list *ap);
-int			get_placeholder_precision(char **fmt, va_list *ap);
+int			get_placeholder_width(char **fmt, va_list *ap, int *have_width);
+int			get_placeholder_precision(char **fmt, va_list *ap, int *have_precision);
 int			get_placeholder_length(char **fmt);
 int			ft_printf(const char *restrict format, ...);
 
