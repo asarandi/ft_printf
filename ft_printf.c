@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 09:21:32 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/09 21:04:58 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/10 02:12:34 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ unsigned char *get_string(va_list *ap, t_placeholder *ph)
 	return (result);
 }
 
-int	digits_before_radix(uintmax_t n)
+int	digits_before_point(uintmax_t n)
 {
 	int	r;
 
@@ -161,10 +161,9 @@ int	digits_before_radix(uintmax_t n)
 unsigned char *get_double(va_list *ap, t_placeholder *ph)
 {
 	double		n;
-	uintmax_t	f_prefix;
-	double		n_coda;
-	double		mult;
-	uintmax_t	f_suffix;
+	uintmax_t	prefix;
+	uintmax_t	suffix;
+	double		decimals;
 
 	(*ph).sign = '+';
 	n = va_arg(*ap, double);
@@ -173,14 +172,13 @@ unsigned char *get_double(va_list *ap, t_placeholder *ph)
 		n = (-n);
 		(*ph).sign = '-';
 	}
-	f_prefix = (uintmax_t) n;
-	n_coda = ((double) n - (double) f_prefix);
-	mult = (n * 1000000000000000000) - (f_prefix * 1000000000000000000);
-	f_suffix = (uintmax_t) mult;
-	while ((f_suffix) && ((f_suffix % 10) == 0))
-		f_suffix /= 10;
-	(*ph).float_prefix = float_itoa(f_prefix);
-	(*ph).float_suffix = float_itoa(f_suffix);
+	prefix = (uintmax_t) n;
+	decimals = ((n - (double)prefix) * 1000000000000000000) + 100;
+	suffix = (uintmax_t) decimals;
+	while ((suffix) && ((suffix % 10) == 0))
+		suffix /= 10;
+	(*ph).float_prefix = float_itoa(prefix);
+	(*ph).float_suffix = float_itoa(suffix);
 	return (NULL);
 }
 
@@ -256,25 +254,51 @@ void	add_precision(t_placeholder *ph)
 		add_string_precision(ph);
 }
 
+
+void	calculate_reserve(int *reserve, t_placeholder *ph)
+{
+	*reserve = 0;
+	if (((*ph).type == 'p') && ((*ph).flags & FLAG_ZERO))
+		*reserve = 2;
+	if ((is_signed((*ph).type)) && ((*ph).flags & FLAG_ZERO))
+	{
+		if ((*ph).flags & FLAG_PLUS)
+			*reserve = 1;
+		else if ((*ph).sign == '-')
+			*reserve = 1;
+		if ((*ph).flags & FLAG_SPACE)
+			*reserve += 1;
+	}
+	if (((*ph).flags & FLAG_HASHTAG) && ((*ph).flags & FLAG_ZERO))
+	{
+		if ((*ph).type == 'o')
+			*reserve = 1;
+		if (((*ph).type == 'x') || ((*ph).type == 'X'))
+			*reserve = 2;
+	}
+}
+
 void	add_width(t_placeholder *ph)
 {
+	int	reserve;
+
+	calculate_reserve(&reserve, ph);
 	if ((*ph).have_width)
 	{
 		if ((*ph).flags & FLAG_MINUS)
 		{
-			while ((*ph).width > (*ph).char_count)
-				string_suffix(ph, " ");
+			while ((*ph).width > (*ph).char_count + reserve)
+				binary_suffix(ph, " ");
 			(*ph).flags &= ~(1 << 1); //clear FLAG_ZERO
 		}
 		else
 		{
-			while ((*ph).width > (*ph).char_count)
+			while ((*ph).width > (*ph).char_count + reserve)
 			{
 				if ((*ph).flags & FLAG_ZERO)	
 					string_prefix(ph, "0");
 				else
 					string_prefix(ph, " ");
-
 			}
 		}
 	}
@@ -303,17 +327,7 @@ void	format_integer(t_placeholder *ph)
 	(*ph).char_count = ft_strlen((char *)(*ph).output);
 	add_precision(ph);
 	if ((*ph).flags & FLAG_ZERO)
-	{
-		if (((*ph).flags & FLAG_PLUS) || ((*ph).sign == '-'))
-			(*ph).char_count++;
-		if ((*ph).flags & FLAG_SPACE)
-			(*ph).char_count++;
 		add_width(ph);
-		if (((*ph).flags & FLAG_PLUS) || ((*ph).sign == '-'))
-			(*ph).char_count--;
-		if ((*ph).flags & FLAG_SPACE)
-			(*ph).char_count--;
-	}
 	if (((*ph).flags & FLAG_PLUS) && (is_signed((*ph).type)))
 		flag_plus(ph);
 	else if ((*ph).sign == '-')
@@ -343,10 +357,8 @@ void	format_hex(t_placeholder *ph)
 	{
 	   	if ((*ph).flags & FLAG_ZERO)
 		{
-			(*ph).char_count += 2;
 			add_width(ph);
 			string_prefix(ph, "0x");
-			(*ph).char_count -= 2;
 		}
 		else
 			string_prefix(ph, "0x");
@@ -411,7 +423,7 @@ void	format_pointer(t_placeholder *ph)
 {
 	(*ph).char_count = ft_strlen((char *)(*ph).output);
 	add_precision(ph);
-	(*ph).char_count = ft_strlen((char *)(*ph).output) + 2;
+	(*ph).char_count = ft_strlen((char *)(*ph).output);
 	if ((*ph).flags & FLAG_ZERO)
 		add_width(ph);
 	string_prefix(ph, "0x");

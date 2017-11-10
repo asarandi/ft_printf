@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 13:29:06 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/09 21:06:04 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/10 02:06:14 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,23 @@ int main()
 
 
 
-	printf("0 printf %d\n",     printf("{%f}{%F}", 1444565444646.6465424242242, 1444565444646.6465424242242));
-	printf("0 ftprnt %d\n",  ft_printf("{%f}{%F}", 1444565444646.6465424242242, 1444565444646.6465424242242));
+/*
+	
+	printf("@ printf %d\n",     printf("@{%c}", 0));
+	printf("@ ftprnt %d\n",  ft_printf("@{%c}", 0));
 
+	
+	printf("X printf %d\n",     printf("{%f}{%F}", 1.42, 1.42));
+	printf("X ftprnt %d\n",  ft_printf("{%f}{%F}", 1.42, 1.42));
+
+*/
+
+	printf("X printf %d\n",     printf("%9.2p", 1234));
+	printf("X ftprnt %d\n",  ft_printf("%9.2p", 1234));
+//	printf("0 printf %d\n",     printf("{%f}", 1444565444646.6465424242242));
+//	printf("0 ftprnt %d\n",  ft_printf("{%f}", 1444565444646.6465424242242));
+//	printf("1 printf %d\n",    printf("{%*d}", -5, 42));
+//	printf("1 ftprnt %d\n", ft_printf("{%*d}", -5, 42));
 
 //	printf(   "printf: {%015.6S}\n", L"家に大型ダンプ突っ込む…運転手死亡、住民無事");
 //	ft_printf("ftprnt: {%015.6S}\n", L"家に大型ダンプ突っ込む…運転手死亡、住民無事");

@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/04 03:50:49 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/09 02:24:29 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/10 00:58:14 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,44 @@ void	string_prefix(t_placeholder *ph, char *prefix)
 	free((*ph).output);
 	(*ph).output = (unsigned char *) memory;
 	return ;
+}
+
+void	*ft_memcpy(void *dest, const void *src, size_t n)
+{
+	unsigned char		*d;
+	const unsigned char	*s;
+	size_t				i;
+
+	d = dest;
+	s = src;
+	i = 0;
+	while (i < n)
+	{
+		d[i] = s[i];
+		i++;
+	}
+	return (void *)(dest);
+}
+
+void	binary_suffix(t_placeholder *ph, char *suffix)
+{
+	int	i;
+	unsigned char	*memory;
+
+	i = (*ph).char_count + ft_strlen(suffix);
+	memory = ft_memalloc(i + 1);
+	if (memory == NULL)
+	{
+		free((*ph).output);
+		(*ph).output = NULL;
+		return ;
+	}
+	i = (*ph).char_count;
+	ft_memcpy(memory, (*ph).output, i);
+	ft_memcpy(&memory[i], suffix, ft_strlen(suffix));
+	(*ph).char_count += ft_strlen(suffix);
+	free((*ph).output);
+	(*ph).output =  memory;
 }
 
 void	string_suffix(t_placeholder *ph, char *suffix)

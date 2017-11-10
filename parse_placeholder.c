@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/01 15:55:33 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/07 23:48:44 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/10 01:21:30 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,26 +37,37 @@ void	get_placeholder_flags(char **fmt, t_placeholder *placeholder)
 	return ;
 }
 
+int	is_digit(char c)
+{
+	if ((c >= '0') && (c <= '9'))
+		return (1);
+	else
+		return (0);
+}
+
 void	get_placeholder_width(char **fmt, va_list *ap, t_placeholder *ph)
 {
-	if (**fmt == '*')
-	{
-		(*ph).have_width = 1;
-		(*fmt)++;
-		(*ph).width = (int)va_arg(*ap, int);
-		return ;
-	}
-	else
-	{
+	while ((is_digit(**fmt)) || (**fmt == '*'))
+	{	
+		(*ph).width = 0;	
 		while ((**fmt >= '0') && (**fmt <= '9'))
 		{
 			(*ph).width = ((*ph).width * 10) + (**fmt - '0');
 			(*fmt)++;
 		}
-		if ((*ph).width)
-			(*ph).have_width = 1;
+		if (**fmt == '*')
+		{
+			(*ph).width = (int)va_arg(*ap, int);
+			if ((*ph).width < 0)
+			{
+				(*ph).width = -(*ph).width;
+				(*ph).flags |= FLAG_MINUS;
+			}
+			(*fmt)++;
+		}
 	}
-	return ;
+	if ((*ph).width)
+		(*ph).have_width = 1;
 }
 
 void	get_placeholder_precision(char **fmt, va_list *ap, t_placeholder *ph)
@@ -69,6 +80,8 @@ void	get_placeholder_precision(char **fmt, va_list *ap, t_placeholder *ph)
 	{
 		(*fmt)++;
 		(*ph).precision = (int)va_arg(*ap, int);
+		if ((*ph).precision < 0)
+			(*ph).have_precision = 0;
 	}
 	else
 	{

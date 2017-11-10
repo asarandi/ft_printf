@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 09:37:11 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/09 20:42:30 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/10 00:47:08 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ typedef	struct	s_placeholder
 	int				char_count;
 }	t_placeholder;
 
+void		binary_suffix(t_placeholder *ph, char *suffix);
+void		*ft_memcpy(void *dest, const void *src, size_t n);
 char		*float_itoa(uintmax_t n);
 char		*ft_strcpy(char *dst, const char *src);
 char		*ft_strdup(const char *s1);
