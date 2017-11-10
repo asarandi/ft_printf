@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/03 01:21:20 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/03 01:21:44 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/08 19:55:32 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,21 +38,18 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-void	*ft_memcpy(void *dest, const void *src, size_t n)
+char	*ft_strcpy(char *dst, const char *src)
 {
-	unsigned char		*d;
-	const unsigned char	*s;
-	size_t				i;
+	int	i;
 
-	d = dest;
-	s = src;
 	i = 0;
-	while (i < n)
+	while (src[i])
 	{
-		d[i] = s[i];
+		dst[i] = src[i];
 		i++;
 	}
-	return (void *)(dest);
+	dst[i] = 0;
+	return (dst);
 }
 
 void	*ft_memalloc(size_t size)
@@ -69,4 +66,14 @@ void	*ft_memalloc(size_t size)
 		i++;
 	}
 	return (p);
+}
+
+char	*ft_strdup(const char *s1)
+{
+	char	*mem;
+
+	mem = (char *)malloc(sizeof(char) * ft_strlen(s1) + 1);
+	if (mem == NULL)
+		return (NULL);
+	return (ft_strcpy(mem, s1));
 }

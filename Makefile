@@ -6,7 +6,7 @@
 #    By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/30 09:00:12 by asarandi          #+#    #+#              #
-#    Updated: 2017/11/04 19:25:28 by asarandi         ###   ########.fr        #
+#    Updated: 2017/11/09 16:20:16 by asarandi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,5 +49,10 @@ clean:
 
 fclean: clean
 	rm -rf $(NAME) $(SONAME)
+
+junk: fclean
+	rm -rf .*.swp
+	rm -rf *.dSYM
+	rm -rf a.out
 
 re: fclean all

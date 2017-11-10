@@ -6,93 +6,78 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/03 01:26:48 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/05 01:22:04 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/09 16:11:10 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-uintmax_t	trim_bits(uintmax_t n, int number_of_bits)
+void	trim_bits(t_placeholder *ph)
 {
-	if (number_of_bits == 8)
-		return (n & UINT8_MAX);
-	if (number_of_bits == 16)
-		return (n & UINT16_MAX);
-	if (number_of_bits == 32)
-		return (n & UINT32_MAX);
-	if (number_of_bits == 64)
-		return (n & UINT64_MAX);
-	return (0);
+	uintmax_t	result;
+
+	result = (*ph).n;
+	if ((*ph).length == 8)
+		result &= UINT8_MAX;
+	else if ((*ph).length == 16)
+		result &= UINT16_MAX;
+	else if ((*ph).length == 32)
+		result &= UINT32_MAX;
+	else if ((*ph).length == 64)
+		result &= UINT64_MAX;
+	(*ph).n = result;
+	return ;
 }
 
-int			check_negative(uintmax_t *n, int number_of_bits, int signedness)
+void	check_negative(t_placeholder *ph)
 {
-	int negative;
+	int			negative;
+	uintmax_t	n;
 
-	if (signedness == 0)
-		return (0);
+	if (is_signed((*ph).type) == 0)
+		return ;
+	n = (*ph).n;
 	negative = 0;
-	if ((number_of_bits == 8) && (*n > INT8_MAX))
+	if (((*ph).length == 8) && (n > INT8_MAX))
 		negative = 1;
-	if ((number_of_bits == 16) && (*n > INT16_MAX))
+	if (((*ph).length == 16) && (n > INT16_MAX))
 		negative = 1;
-	if ((number_of_bits == 32) && (*n > INT32_MAX))
+	if (((*ph).length == 32) && (n > INT32_MAX))
 		negative = 1;
-	if ((number_of_bits == 64) && (*n > INT64_MAX))
+	if (((*ph).length == 64) && (n > INT64_MAX))
 		negative = 1;
-	*n = negative ? -*n : *n;
-	return (negative);
-}
-
-char		*print_decimal(uintmax_t n, int number_of_bits, int signedness, char *sign)
-{
-	int		negative;
-	int		i;
-	char	buffer[32];
-	char	*result;
-
-	if ((negative = check_negative(&n, number_of_bits, signedness)) == 1)
-		*sign = '-';
+	(*ph).n = negative ? -n : n;
+	if (negative)
+		(*ph).sign = '-';
 	else
-		*sign = '+';
-	n = trim_bits(n, number_of_bits);
-
-	i = 31;
-	buffer[i--] = 0;
-	if (n == 0)
-		buffer[i--] = '0';
-	while (n)
-	{
-		buffer[i--] = (n % 10) + '0';
-		n /= 10;
-	}
-	i++;
-	result = ft_memalloc(ft_strlen(&buffer[i]) + 1);
-	if (result == NULL)
-		return (NULL);
-	return (ft_memcpy(result, &buffer[i], ft_strlen(&buffer[i])));
+		(*ph).sign = '+';
+	trim_bits(ph);
 }
 
-char		*print_octohex(uintmax_t n, int number_of_bits, int base)
+void	make_numeric_output(t_placeholder *ph)
 {
-	const char	*hex_table = "0123456789abcdef";
+	uintmax_t	n;
+	int			base;
 	int			i;
 	char		buffer[32];
-	char		*result;
+	const char	*hex = "0123456789abcdef";
 
-	n = trim_bits(n, number_of_bits);
+	base = get_base((*ph).type);
+	trim_bits(ph);
+	check_negative(ph);
 	i = 31;
 	buffer[i--] = 0;
+	n = (*ph).n;
 	if (n == 0)
 		buffer[i--] = '0';
 	while (n)
 	{
-		buffer[i--] = hex_table[n % base];
+		buffer[i--] = hex[n % base];
 		n /= base;
 	}
 	i++;
-	result = ft_memalloc(ft_strlen(&buffer[i]) + 1);
-	if (result == NULL)
-		return (NULL);
-	return (ft_memcpy(result, &buffer[i], ft_strlen(&buffer[i])));
+	(*ph).output = ft_memalloc(ft_strlen(&buffer[i]) + 1);
+	if ( (*ph).output != NULL)
+		ft_strcpy((char *)(*ph).output, &buffer[i]);
+	return ;
 }

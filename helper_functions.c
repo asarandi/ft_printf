@@ -6,65 +6,65 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/04 03:50:34 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/04 03:50:37 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/08 00:28:40 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-int	printf_is_numeric(char *fmt)
+int	is_numeric(char type)
 {
-	if ((*fmt == 'p') || (*fmt == 'd') || (*fmt == 'D') || (*fmt == 'i'))
+	if ((type == 'p') || (type == 'd') || (type == 'D') || (type == 'i'))
 		return (1);
-	else if ((*fmt == 'o') || (*fmt == 'O') || (*fmt == 'u'))
+	else if ((type == 'o') || (type == 'O') || (type == 'u'))
 		return (1);
-	else if ((*fmt == 'U') || (*fmt == 'x') || (*fmt == 'X'))
+	else if ((type == 'U') || (type == 'x') || (type == 'X'))
 		return (1);
 	else
 		return (0);
 }
 
-int	printf_get_default_length(char *fmt)
+int	get_default_length(char type)
 {
-	if ((*fmt == 'd') || (*fmt == 'o') || (*fmt == 'u'))
+	if ((type == 'd') || (type == 'o') || (type == 'u'))
 		return (sizeof(int) * CHAR_BIT);
-	else if ((*fmt == 'i') || (*fmt == 'x') || (*fmt == 'X'))
+	else if ((type == 'i') || (type == 'x') || (type == 'X'))
 		return (sizeof(int) * CHAR_BIT);
-	else if ((*fmt == 'D') || (*fmt == 'O') || (*fmt == 'U'))
+	else if ((type == 'D') || (type == 'O') || (type == 'U'))
 		return (sizeof(long) * CHAR_BIT);
-	else if (*fmt == 'p')
+	else if (type == 'p')
 		return (sizeof(ptrdiff_t) * CHAR_BIT);
 	else
 		return (0);
 }
 
-int	printf_is_signed(char *fmt)
+int	is_signed(char type)
 {
-	if ((*fmt == 'd') || (*fmt == 'D') || (*fmt == 'i'))
+	if ((type == 'd') || (type == 'D') || (type == 'i'))
 		return (1);
 	else
 		return (0);
 }
 
-int	printf_is_decimal(char *fmt)
+int	is_decimal(char type)
 {
-	if ((*fmt == 'd') || (*fmt == 'D') || (*fmt == 'i'))
+	if ((type == 'd') || (type == 'D') || (type == 'i'))
 		return (1);
-	else if ((*fmt == 'u') || (*fmt == 'U'))
+	else if ((type == 'u') || (type == 'U'))
 		return (1);
 	else
 		return (0);
 }
 
-int	printf_get_base(char *fmt)
+int	get_base(char type)
 {
-	if ((*fmt == 'd') || (*fmt == 'D') || (*fmt == 'i'))
+	if ((type == 'd') || (type == 'D') || (type == 'i'))
 		return (10);
-	else if ((*fmt == 'u') || (*fmt == 'U'))
+	else if ((type == 'u') || (type == 'U'))
 		return (10);
-	else if ((*fmt == 'o') || (*fmt == 'O'))
+	else if ((type == 'o') || (type == 'O'))
 		return (8);
-	else if ((*fmt == 'x') || (*fmt == 'X') || (*fmt == 'p'))
+	else if ((type == 'x') || (type == 'X') || (type == 'p'))
 		return (16);
 	else
 		return (0);

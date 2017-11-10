@@ -13,9 +13,13 @@
 int main()
 {
 
+	wchar_t	*wide = L"До́брый ве́чер";
 
-	printf("printf: %#o\n", 0);
-	ft_printf("ft_printf: %#o\n", 0);
+       	printf("pf {%S}\n", wide);
+	ft_printf("ft {%S}\n", wide);
+
+//   	printf("printf: %#o\n", 1230);
+//	ft_printf("ft_printf: {%%} alex  %#o\n", 1230);
 
 /*
 printf("\n1 %.4d", -42);
