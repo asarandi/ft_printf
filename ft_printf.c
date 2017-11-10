@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 09:21:32 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/09 16:22:36 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/09 21:04:58 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ void	get_placeholder_type(char **fmt, t_placeholder *ph)
 		}
 		i++;
 	}
-	(*fmt)++;
+	if (**fmt)
+		(*fmt)++;
 	return ;
 }
 
@@ -142,6 +143,47 @@ unsigned char *get_string(va_list *ap, t_placeholder *ph)
 	return (result);
 }
 
+int	digits_before_radix(uintmax_t n)
+{
+	int	r;
+
+	if (n == 0)
+		return (1);
+	r = 0;
+	while (n)
+	{
+		r++;
+		n /= 10;
+	}
+	return (r);
+}
+
+unsigned char *get_double(va_list *ap, t_placeholder *ph)
+{
+	double		n;
+	uintmax_t	f_prefix;
+	double		n_coda;
+	double		mult;
+	uintmax_t	f_suffix;
+
+	(*ph).sign = '+';
+	n = va_arg(*ap, double);
+	if (n < 0)
+	{
+		n = (-n);
+		(*ph).sign = '-';
+	}
+	f_prefix = (uintmax_t) n;
+	n_coda = ((double) n - (double) f_prefix);
+	mult = (n * 1000000000000000000) - (f_prefix * 1000000000000000000);
+	f_suffix = (uintmax_t) mult;
+	while ((f_suffix) && ((f_suffix % 10) == 0))
+		f_suffix /= 10;
+	(*ph).float_prefix = float_itoa(f_prefix);
+	(*ph).float_suffix = float_itoa(f_suffix);
+	return (NULL);
+}
+
 void	make_non_numeric(t_placeholder *ph, va_list *ap)
 {
 	if ((*ph).type == 's')
@@ -152,6 +194,8 @@ void	make_non_numeric(t_placeholder *ph, va_list *ap)
 		(*ph).output = get_wchar(ap, ph);
 	else if ((*ph).type == 'c')
 		(*ph).output = get_char(ap, ph);
+	else if (((*ph).type == 'f') || ((*ph).type == 'F'))
+		(*ph).output = get_double(ap, ph);
 	else
 	{
 		(*ph).invalid = 1;
@@ -161,6 +205,20 @@ void	make_non_numeric(t_placeholder *ph, va_list *ap)
 	}
 }
 
+void	add_wide_string_precision(t_placeholder *ph)
+{
+		int	i;
+
+		i = (*ph).precision;
+		if (((*ph).have_precision) && (i >= 0))
+		{
+			while ((i >= 0) && (((*ph).output[i] >> 6) == 2))
+				i--;
+			if ((i >= 0) && (((*ph).output[i] >> 6) != 2))
+				(*ph).output[i] = 0;
+			(*ph).char_count = ft_strlen((char *)(*ph).output);
+		}
+}
 
 void	add_string_precision(t_placeholder *ph)
 {
@@ -174,6 +232,11 @@ void	add_string_precision(t_placeholder *ph)
 				(*ph).char_count = ft_strlen((char *)(*ph).output);
 			}
 		}
+		else if (((*ph).type == 's') && ((*ph).length > 32))
+			add_wide_string_precision(ph);
+		else if ((*ph).type == 'S')
+			add_wide_string_precision(ph);
+
 }
 
 void	add_precision(t_placeholder *ph)
@@ -242,19 +305,22 @@ void	format_integer(t_placeholder *ph)
 	if ((*ph).flags & FLAG_ZERO)
 	{
 		if (((*ph).flags & FLAG_PLUS) || ((*ph).sign == '-'))
-		{
 			(*ph).char_count++;
-			add_width(ph);
+		if ((*ph).flags & FLAG_SPACE)
+			(*ph).char_count++;
+		add_width(ph);
+		if (((*ph).flags & FLAG_PLUS) || ((*ph).sign == '-'))
 			(*ph).char_count--;
-		}
+		if ((*ph).flags & FLAG_SPACE)
+			(*ph).char_count--;
 	}
 	if (((*ph).flags & FLAG_PLUS) && (is_signed((*ph).type)))
 		flag_plus(ph);
 	else if ((*ph).sign == '-')
 		string_prefix(ph, "-");
-	add_width(ph);
 	if ((*ph).flags & FLAG_SPACE)
 		flag_space(ph);
+	add_width(ph);
 }
 
 void	format_octal(t_placeholder *ph)
@@ -290,6 +356,26 @@ void	format_hex(t_placeholder *ph)
 		ft_strtoupper((char *)(*ph).output);
 }
 
+
+void	format_double(t_placeholder *ph)
+{
+	(*ph).output = (unsigned char *) (*ph).float_suffix;
+	if ((*ph).have_precision == 0)
+	{	if (ft_strlen((char *)(*ph).output) > 6)
+		(*ph).output[6] = 0;
+		while (ft_strlen((char *)(*ph).output) < 6)
+			string_suffix(ph, "0");
+	}
+	(*ph).char_count = ft_strlen((char *)(*ph).output);
+	add_precision(ph);
+	string_prefix(ph, ".");
+	string_prefix(ph, (*ph).float_prefix);
+	free((*ph).float_prefix);
+	if ((*ph).sign == '-')
+		string_prefix(ph, "-");
+	add_width(ph);
+}
+
 void	format_string(t_placeholder *ph)
 {
 	add_precision(ph);
@@ -298,7 +384,6 @@ void	format_string(t_placeholder *ph)
 
 void	format_wide_string(t_placeholder *ph)
 {
-
 	add_precision(ph);
 	add_width(ph);
 }
@@ -361,6 +446,8 @@ void	format_output(char type, t_placeholder *ph)
 		format_wide_char(ph);
 	else if (type == 'p')
 		format_pointer(ph);
+	else if ((type == 'f') || (type == 'F'))
+		format_double(ph);
 	else
 		format_invalid(ph);
 }
@@ -404,8 +491,26 @@ int	init_placeholder(t_placeholder *ph)
 	(*ph).invalid = 0;
 	(*ph).location = 0;
 	(*ph).output = 0;
+	(*ph).float_prefix = 0;
+	(*ph).float_suffix = 0;
 	(*ph).char_count = 0;
 	return (0);
+}
+
+void	invalid_skip_forward(char **fmt, t_placeholder *ph)
+{
+	if (((*ph).invalid == 1) && ((*ph).char_count == 0))
+	{
+		while (**fmt)
+		{
+			if ((**fmt >= 9) && (**fmt <= 13))
+				break ;
+			else if (**fmt == ' ')
+				break ;
+			else
+				(*fmt)++;
+		}
+	}
 }
 
 int	main_routine(const char *restrict *format, va_list *ap)
@@ -420,6 +525,7 @@ int	main_routine(const char *restrict *format, va_list *ap)
 		placeholder.char_count = ft_strlen((char *)placeholder.output);
 	write(1, placeholder.output, placeholder.char_count);
 	free(placeholder.output);
+	invalid_skip_forward(&fmt, &placeholder);
 	*(format) = (char *)fmt;
 	return (placeholder.char_count);
 }
@@ -444,7 +550,7 @@ int	ft_printf(const char *restrict format, ...)
 				format++;
 				count++;
 			}
-			else if (*format)
+			else if ((*format) && (*format + 1))
 					count += main_routine(&format, &ap);
 	}
 	va_end(ap);

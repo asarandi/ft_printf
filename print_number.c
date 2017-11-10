@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/03 01:26:48 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/09 16:11:10 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/09 20:43:26 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,22 @@ void	make_numeric_output(t_placeholder *ph)
 	if ( (*ph).output != NULL)
 		ft_strcpy((char *)(*ph).output, &buffer[i]);
 	return ;
+}
+
+char	*float_itoa(uintmax_t n)
+{
+	int			i;
+	char		buffer[32];
+
+	i = 31;
+	buffer[i--] = 0;
+	if (n == 0)
+		buffer[i--] = '0';
+	while (n)
+	{
+		buffer[i--] = (n % 10) + '0';
+		n /= 10;
+	}
+	i++;
+	return (ft_strdup(&buffer[i]));
 }

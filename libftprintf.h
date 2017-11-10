@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 09:37:11 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/08 21:18:25 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/09 20:42:30 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,12 @@ typedef	struct	s_placeholder
 	int				invalid;
 	char			*location;
 	unsigned char	*output;
+	char			*float_prefix;
+	char			*float_suffix;
 	int				char_count;
 }	t_placeholder;
 
+char		*float_itoa(uintmax_t n);
 char		*ft_strcpy(char *dst, const char *src);
 char		*ft_strdup(const char *s1);
 void		parse_placeholder(char **fmt, va_list *ap, t_placeholder *placeholder);

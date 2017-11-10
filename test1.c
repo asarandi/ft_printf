@@ -6,18 +6,28 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 13:29:06 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/09 15:51:17 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/09 21:06:04 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "libftprintf.h"
+#include <locale.h>
 
-int	main()
+int main()
 {
+    char *locale;
+
+    locale = setlocale(LC_ALL, "");
 
 
 
+	printf("0 printf %d\n",     printf("{%f}{%F}", 1444565444646.6465424242242, 1444565444646.6465424242242));
+	printf("0 ftprnt %d\n",  ft_printf("{%f}{%F}", 1444565444646.6465424242242, 1444565444646.6465424242242));
+
+
+//	printf(   "printf: {%015.6S}\n", L"家に大型ダンプ突っ込む…運転手死亡、住民無事");
+//	ft_printf("ftprnt: {%015.6S}\n", L"家に大型ダンプ突っ込む…運転手死亡、住民無事");
 
 
 /*
@@ -28,12 +38,8 @@ debug next:
 */
 
 
-
-
-
 //debug next: {%3c} .. printf outputs 2 blank spaces
 /// ft_printf outputs 3 blank spaces
-
 
 /*
 printf("%d\n",     printf("1 printf: {%#.o, %#.0o}\n", 0, 0));
@@ -51,13 +57,8 @@ printf("%d\n", ft_printf( "4 ftprnt: {%05p}\n", 0));
 printf("%d\n",     printf("5 printf: {%.5p}\n", 0));
 printf("%d\n", ft_printf( "5 ftprnt: {%.5p}\n", 0));
 */
-printf("%d\n",     printf("6 printf: {%d}\n", -2147483655));
-printf("%d\n", ft_printf( "6 ftprnt: {%d}\n", -2147483655));
-
-
-
-
-
+//printf("%d\n",     printf("6 printf: {%d}\n", -2147483655));
+//printf("%d\n", ft_printf( "6 ftprnt: {%d}\n", -2147483655));
 
 //	printf("printf %d\n",    printf("%.5C", 0));
 //	printf("ftprnt %d\n", ft_printf("%.5C", 0));
