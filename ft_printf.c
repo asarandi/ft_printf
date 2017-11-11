@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 09:21:32 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/10 16:10:07 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/11 03:38:12 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,14 @@ void	invalid_skip_forward(char **fmt, t_placeholder *ph)
 	}
 }
 
-int		main_routine(const char *restrict *format, va_list *ap)
+int		main_routine(const char *restrict *format, va_list *ap, int written)
 {
 	char			*fmt;
 	t_placeholder	placeholder;
 
 	fmt = (char *)*(format);
 	init_placeholder(&placeholder);
+	placeholder.written = written;
 	parse_placeholder(&fmt, ap, &placeholder);
 	if (placeholder.char_count == 0)
 		placeholder.char_count = ft_strlen((char *)placeholder.output);
@@ -66,7 +67,7 @@ int		ft_printf(const char *restrict format, ...)
 			count++;
 		}
 		else if ((*format) && (*format + 1))
-			count += main_routine(&format, &ap);
+			count += main_routine(&format, &ap, count);
 	}
 	va_end(ap);
 	return (count);

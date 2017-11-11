@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/10 15:01:00 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/11 02:34:50 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/11 03:46:33 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ unsigned char	*get_double(va_list *ap, t_placeholder *ph)
 
 void			make_non_numeric(t_placeholder *ph, va_list *ap)
 {
+	int	*n_ptr;
+
 	if ((*ph).type == 's')
 		(*ph).output = get_string(ap, ph);
 	else if ((*ph).type == 'S')
@@ -111,6 +113,11 @@ void			make_non_numeric(t_placeholder *ph, va_list *ap)
 		(*ph).output = get_char(ap, ph);
 	else if (((*ph).type == 'f') || ((*ph).type == 'F'))
 		(*ph).output = get_double(ap, ph);
+	else if ((*ph).type == 'n')
+	{
+		n_ptr = (int *)va_arg(*ap, int *);
+		*n_ptr = (*ph).written;
+	}
 	else
 	{
 		(*ph).invalid = 1;

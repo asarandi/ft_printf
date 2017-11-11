@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/10 14:52:30 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/10 15:58:20 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/11 03:39:25 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,11 @@ void	format_double(t_placeholder *ph)
 	(*ph).char_count = ft_strlen((char *)(*ph).output);
 	add_precision(ph);
 	string_prefix(ph, ".");
+	if (((*ph).have_precision) && ((*ph).precision == 0))
+	{
+		(*ph).output[0] = 0;
+		(*ph).char_count = 0;
+	}
 	string_prefix(ph, (*ph).float_prefix);
 	free((*ph).float_prefix);
 	if ((*ph).sign == '-')
