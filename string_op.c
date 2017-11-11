@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   helper_functions_2.c                               :+:      :+:    :+:   */
+/*   string_op.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/04 03:50:49 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/10 00:58:14 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/10 16:12:00 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	string_prefix(t_placeholder *ph, char *prefix)
 {
-	int	i;
+	int		i;
 	char	*memory;
 
 	i = ft_strlen((char *)(*ph).output) + ft_strlen(prefix);
@@ -30,7 +30,7 @@ void	string_prefix(t_placeholder *ph, char *prefix)
 	ft_strcpy(memory, prefix);
 	ft_strcpy(&memory[i], (char *)(*ph).output);
 	free((*ph).output);
-	(*ph).output = (unsigned char *) memory;
+	(*ph).output = (unsigned char *)memory;
 	return ;
 }
 
@@ -53,7 +53,7 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 
 void	binary_suffix(t_placeholder *ph, char *suffix)
 {
-	int	i;
+	int				i;
 	unsigned char	*memory;
 
 	i = (*ph).char_count + ft_strlen(suffix);
@@ -69,12 +69,12 @@ void	binary_suffix(t_placeholder *ph, char *suffix)
 	ft_memcpy(&memory[i], suffix, ft_strlen(suffix));
 	(*ph).char_count += ft_strlen(suffix);
 	free((*ph).output);
-	(*ph).output =  memory;
+	(*ph).output = memory;
 }
 
 void	string_suffix(t_placeholder *ph, char *suffix)
 {
-	int	i;
+	int		i;
 	char	*memory;
 
 	i = ft_strlen((char *)(*ph).output) + ft_strlen(suffix);
@@ -90,5 +90,5 @@ void	string_suffix(t_placeholder *ph, char *suffix)
 	ft_strcpy(memory, (char *)(*ph).output);
 	ft_strcpy(&memory[i], suffix);
 	free((*ph).output);
-	(*ph).output = (unsigned char *) memory;
+	(*ph).output = (unsigned char *)memory;
 }

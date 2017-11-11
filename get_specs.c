@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_placeholder.c                                :+:      :+:    :+:   */
+/*   get_specs.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/01 15:55:33 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/10 01:21:30 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/10 15:54:57 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,11 @@ void	get_placeholder_flags(char **fmt, t_placeholder *placeholder)
 	return ;
 }
 
-int	is_digit(char c)
-{
-	if ((c >= '0') && (c <= '9'))
-		return (1);
-	else
-		return (0);
-}
-
 void	get_placeholder_width(char **fmt, va_list *ap, t_placeholder *ph)
 {
 	while ((is_digit(**fmt)) || (**fmt == '*'))
-	{	
-		(*ph).width = 0;	
+	{
+		(*ph).width = 0;
 		while ((**fmt >= '0') && (**fmt <= '9'))
 		{
 			(*ph).width = ((*ph).width * 10) + (**fmt - '0');
@@ -115,6 +107,28 @@ void	get_placeholder_length(char **fmt, t_placeholder *placeholder)
 	else if ((**fmt == 'l') && ((*(fmt))[1] == 'l'))
 		(*fmt)++;
 	if ((*placeholder).length)
+		(*fmt)++;
+	return ;
+}
+
+void	get_placeholder_type(char **fmt, t_placeholder *ph)
+{
+	const char	*valid_types = "dDiuUoOxXpcCsSfF";
+	int			i;
+
+	i = 0;
+	(*ph).type = **fmt;
+	(*ph).invalid = 1;
+	while (valid_types[i])
+	{
+		if (**fmt == valid_types[i])
+		{
+			(*ph).invalid = 0;
+			break ;
+		}
+		i++;
+	}
+	if (**fmt)
 		(*fmt)++;
 	return ;
 }

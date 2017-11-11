@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/03 01:26:48 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/09 20:43:26 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/10 16:00:37 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	make_numeric_output(t_placeholder *ph)
 	}
 	i++;
 	(*ph).output = ft_memalloc(ft_strlen(&buffer[i]) + 1);
-	if ( (*ph).output != NULL)
+	if ((*ph).output != NULL)
 		ft_strcpy((char *)(*ph).output, &buffer[i]);
 	return ;
 }
