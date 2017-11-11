@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/10 14:45:22 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/11 02:53:30 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/11 03:22:30 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ void	add_precision(t_placeholder *ph)
 		{
 			while ((*ph).char_count < (*ph).precision)
 				string_suffix(ph, "0");
+			(*ph).char_count = (*ph).precision;
+			(*ph).output[(*ph).precision] = 0;
 		}
 		else
 			add_string_precision(ph);
