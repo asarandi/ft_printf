@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 09:37:11 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/10 16:16:30 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/10 20:58:51 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stddef.h>
 # include <stdint.h>
 # include <limits.h>
+# include <wctype.h>
 
 # define FLAG_HASHTAG	1
 # define FLAG_ZERO		2

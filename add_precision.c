@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/10 14:45:22 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/10 16:03:16 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/11 02:53:30 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,17 +48,25 @@ void	add_string_precision(t_placeholder *ph)
 
 void	add_precision(t_placeholder *ph)
 {
-	if (((*ph).have_precision) && (is_numeric((*ph).type)))
+	if ((*ph).have_precision)
 	{
-		while ((*ph).precision > (*ph).char_count)
-			string_prefix(ph, "0");
-		(*ph).flags &= ~(1 << 1);
-		if (((*ph).have_precision) && ((*ph).precision == 0) && ((*ph).n == 0))
+		if (is_numeric((*ph).type))
 		{
-			(*ph).output[0] = 0;
-			(*ph).char_count = 0;
+			while ((*ph).precision > (*ph).char_count)
+				string_prefix(ph, "0");
+			(*ph).flags &= ~(1 << 1);
+			if (((*ph).have_precision) && ((*ph).precision == 0) && ((*ph).n == 0))
+			{
+				(*ph).output[0] = 0;
+				(*ph).char_count = 0;
+			}
 		}
+		else if (((*ph).type == 'f') || ((*ph).type == 'F'))
+		{
+			while ((*ph).char_count < (*ph).precision)
+				string_suffix(ph, "0");
+		}
+		else
+			add_string_precision(ph);
 	}
-	else
-		add_string_precision(ph);
 }

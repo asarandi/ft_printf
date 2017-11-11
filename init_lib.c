@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/10 14:57:49 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/10 15:59:57 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/11 03:00:01 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	format_pointer(t_placeholder *ph)
 	(*ph).char_count = ft_strlen((char *)(*ph).output);
 	add_precision(ph);
 	(*ph).char_count = ft_strlen((char *)(*ph).output);
-	if ((*ph).flags & FLAG_ZERO)
+	if (((*ph).flags & FLAG_HASHTAG) || ((*ph).flags & FLAG_ZERO))
 		add_width(ph);
 	string_prefix(ph, "0x");
 	(*ph).char_count = ft_strlen((char *)(*ph).output);

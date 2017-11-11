@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/10 15:01:00 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/10 15:56:27 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/11 02:34:50 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,33 @@ int				digits_before_point(uintmax_t n)
 	return (r);
 }
 
+
+char	*float_suffix(uintmax_t n, int digits)
+{
+	int			i;
+	char		buffer[32];
+
+	i = 31;
+	buffer[i--] = 0;
+	if (n == 0)
+		buffer[i--] = '0';
+	while (digits--)
+	{
+		buffer[i--] = (n % 10) + '0';
+		n /= 10;
+	}
+	i++;
+	return (ft_strdup(&buffer[i]));
+}
+
+
+
 unsigned char	*get_double(va_list *ap, t_placeholder *ph)
 {
 	double		n;
 	uintmax_t	prefix;
 	uintmax_t	suffix;
-	double		decimals;
+//	double		decimals;
 
 	(*ph).sign = '+';
 	n = va_arg(*ap, double);
@@ -56,13 +77,25 @@ unsigned char	*get_double(va_list *ap, t_placeholder *ph)
 		n = (-n);
 		(*ph).sign = '-';
 	}
-	prefix = (uintmax_t)n;
-	decimals = ((n - (double)prefix) * 1000000000000000000) + 100;
-	suffix = (uintmax_t)decimals;
-	while ((suffix) && ((suffix % 10) == 0))
-		suffix /= 10;
+	int dap = 0;
+	prefix = (uintmax_t) n;
+	double copy = (double)prefix;
+	suffix = prefix;
+	uintmax_t suf2 = 0;
+	while (n - copy != 0)
+	{
+		n *= 10.0;
+		copy = (double)suffix * (double)10.0;
+		suffix *= 10;
+		suffix += (uintmax_t) (n - copy);
+		suf2 *= 10;
+		suf2 += (uintmax_t) (n - copy);
+		dap++;
+		if (dap >= 19)
+			break ;
+	}
 	(*ph).float_prefix = float_itoa(prefix);
-	(*ph).float_suffix = float_itoa(suffix);
+	(*ph).float_suffix = float_suffix(suf2, dap);
 	return (NULL);
 }
 

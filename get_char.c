@@ -6,42 +6,22 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/10 14:38:04 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/10 19:03:29 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/10 20:59:36 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-/*
-** supposedly moulinette's test environment does not have the locale set
-** (unlike the terminal in os x) so get_wchar should not print multi-byte,
-** but only the unsigned bottom byte of what it gets from va_arg
-** to print multi-byte comment out last 2 lines before return in get_wchar
-*/
-
 unsigned char	*get_wchar(va_list *ap, t_placeholder *ph)
 {
-	unsigned char	buffer[5];
-	unsigned int	wchar;
-	unsigned char	*result;
-	int				i;
+	wchar_t			*result;
 
-	i = 0;
-	while (i < 5)
-		buffer[i++] = 0;
-	wchar = (unsigned int)va_arg(*ap, wchar_t);
-	(*ph).char_count = wchar_to_utf8(wchar, buffer);
-	if ((result = ft_memalloc(8)) == NULL)
+	if ((result = ft_memalloc(sizeof(wchar_t) * 2)) == NULL)
 		return (NULL);
-	i = 0;
-	while (i < 5)
-	{
-		result[i] = buffer[i];
-		i++;
-	}
-	result[0] = (unsigned char)(wchar & 0xff);
+	result[0] = (wchar_t)va_arg(*ap, wint_t);
+	result[1] = 0;
 	(*ph).char_count = 1;
-	return (result);
+	return ((unsigned char *)result);
 }
 
 unsigned char	*get_char(va_list *ap, t_placeholder *ph)
