@@ -6,11 +6,18 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/10 14:38:04 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/10 16:08:26 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/10 19:03:29 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
+
+/*
+** supposedly moulinette's test environment does not have the locale set
+** (unlike the terminal in os x) so get_wchar should not print multi-byte,
+** but only the unsigned bottom byte of what it gets from va_arg
+** to print multi-byte comment out last 2 lines before return in get_wchar
+*/
 
 unsigned char	*get_wchar(va_list *ap, t_placeholder *ph)
 {
@@ -32,6 +39,8 @@ unsigned char	*get_wchar(va_list *ap, t_placeholder *ph)
 		result[i] = buffer[i];
 		i++;
 	}
+	result[0] = (unsigned char)(wchar & 0xff);
+	(*ph).char_count = 1;
 	return (result);
 }
 
