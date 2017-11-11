@@ -23,7 +23,7 @@ unsigned char	*get_wchar(va_list *ap, t_placeholder *ph)
 	while (i < 5)
 		buffer[i++] = 0;
 	wchar = (unsigned int)va_arg(*ap, wchar_t);
-	i = wchar_to_utf8(wchar, buffer);
+	(*ph).char_count = wchar_to_utf8(wchar, buffer);
 	if ((result = ft_memalloc(8)) == NULL)
 		return (NULL);
 	i = 0;
@@ -32,8 +32,6 @@ unsigned char	*get_wchar(va_list *ap, t_placeholder *ph)
 		result[i] = buffer[i];
 		i++;
 	}
-	if (result[0] == 0)
-		(*ph).char_count = 1;
 	return (result);
 }
 
