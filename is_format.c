@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/04 03:50:34 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/11 19:19:16 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/11 19:40:31 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	is_numeric(char type)
 		return (1);
 	else if (type == 'b')
 		return (1);
-
 	else
 		return (0);
 }

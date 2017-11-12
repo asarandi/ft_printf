@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 09:37:11 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/11 18:26:37 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/11 19:50:43 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ typedef	struct	s_placeholder
 	int				written;
 }				t_placeholder;
 
-typedef	t_placeholder	t_ph;
-typedef	const char *restrict t_ccr;
+typedef t_placeholder	t_ph;
+typedef const char	*t_cc;
 
 void			iso_time(uintmax_t t);
 char			*float_itoa(uintmax_t n);
@@ -69,7 +69,7 @@ int				is_deprecated(char type);
 int				is_digit(char c);
 int				is_numeric(char type);
 int				is_signed(char type);
-int				main_routine(t_ccr *format, va_list *ap, int written);
+int				main_routine(t_cc restrict *format, va_list *ap, int written);
 int				wchar_to_utf8(unsigned int wchar, unsigned char *output);
 size_t			ft_strlen(const char *s);
 unsigned char	*get_char(va_list *ap, t_placeholder *ph);

@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/10 15:01:00 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/11 18:33:59 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/11 19:36:43 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ void			make_non_numeric(t_placeholder *ph, va_list *ap)
 	{
 		n_ptr = (int *)va_arg(*ap, int *);
 		*n_ptr = (*ph).written;
+		(*ph).output = ft_memalloc(1);
 	}
 	else
 		other_formats(ph, ap);
