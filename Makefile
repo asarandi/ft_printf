@@ -6,7 +6,7 @@
 #    By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/30 09:00:12 by asarandi          #+#    #+#              #
-#    Updated: 2017/11/11 18:45:54 by asarandi         ###   ########.fr        #
+#    Updated: 2017/11/11 22:31:08 by asarandi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,8 @@ FILES	=	add_precision.c \
 			print_number.c \
 			string_op.c \
 			wchar_to_utf8.c \
-			iso8601.c
+			iso8601.c \
+			colors.c 
 OBJ		= $(FILES:%.c=%.o)
 INC		= libftprintf.h
 
