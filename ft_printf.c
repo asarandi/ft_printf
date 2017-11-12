@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 09:21:32 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/11 23:13:49 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/11 23:24:47 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int		main_routine(const char *restrict *format, va_list *ap, int written)
 	if (*(*format + 1) == '%')
 	{
 		(*format)++;
-		return (write(1, *(format)++, 1));
+		return (0);
 	}
 	fmt = (char *)*(format);
 	init_placeholder(&placeholder);
