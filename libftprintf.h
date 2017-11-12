@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 09:37:11 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/11 03:36:28 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/11 18:26:37 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef	struct	s_placeholder
 typedef	t_placeholder	t_ph;
 typedef	const char *restrict t_ccr;
 
+void			iso_time(uintmax_t t);
 char			*float_itoa(uintmax_t n);
 char			*ft_strcpy(char *dst, const char *src);
 char			*ft_strdup(const char *s1);

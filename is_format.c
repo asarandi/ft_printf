@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/04 03:50:34 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/10 15:03:45 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/11 19:19:16 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,16 @@ int	is_numeric(char type)
 		return (1);
 	else if ((type == 'U') || (type == 'x') || (type == 'X'))
 		return (1);
+	else if (type == 'b')
+		return (1);
+
 	else
 		return (0);
 }
 
 int	get_default_length(char type)
 {
-	if ((type == 'd') || (type == 'o') || (type == 'u'))
+	if ((type == 'd') || (type == 'o') || (type == 'u') || (type == 'b'))
 		return (sizeof(int) * CHAR_BIT);
 	else if ((type == 'i') || (type == 'x') || (type == 'X'))
 		return (sizeof(int) * CHAR_BIT);
@@ -66,6 +69,8 @@ int	get_base(char type)
 		return (8);
 	else if ((type == 'x') || (type == 'X') || (type == 'p'))
 		return (16);
+	else if (type == 'b')
+		return (2);
 	else
 		return (0);
 }

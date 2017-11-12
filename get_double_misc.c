@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/10 15:01:00 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/11 03:46:33 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/11 18:33:59 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,24 @@ unsigned char	*get_double(va_list *ap, t_placeholder *ph)
 	return (NULL);
 }
 
+void			other_formats(t_placeholder *ph, va_list *ap)
+{
+	if	((*ph).type == 'k')
+	{
+		iso_time((uintmax_t)va_arg(*ap, uintmax_t));
+		(*ph).output = ft_memalloc(1);
+		(*ph).char_count = ft_strlen("2017-11-11T20:26:43+00:00");
+	}
+	else
+	{
+		(*ph).invalid = 1;
+		(*ph).output = ft_memalloc(2);
+		(*ph).output[0] = (*ph).type;
+		(*ph).char_count = 1;
+	}
+
+}
+
 void			make_non_numeric(t_placeholder *ph, va_list *ap)
 {
 	int	*n_ptr;
@@ -119,10 +137,5 @@ void			make_non_numeric(t_placeholder *ph, va_list *ap)
 		*n_ptr = (*ph).written;
 	}
 	else
-	{
-		(*ph).invalid = 1;
-		(*ph).output = ft_memalloc(2);
-		(*ph).output[0] = (*ph).type;
-		(*ph).char_count = 1;
-	}
+		other_formats(ph, ap);
 }

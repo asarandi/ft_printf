@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/10 14:57:49 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/11 03:43:36 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/11 19:16:55 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	format_output(char type, t_placeholder *ph)
 		format_string(ph);
 	else if (type == 'S')
 		format_wide_string(ph);
-	else if ((type == 'u') || (type == 'U'))
+	else if ((type == 'u') || (type == 'U') || (type == 'b'))
 		format_unsigned_int(ph);
 	else if (type == 'c')
 		format_char(ph);

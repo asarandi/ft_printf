@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/03 01:26:48 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/10 16:00:37 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/11 19:14:47 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,13 @@ void	make_numeric_output(t_placeholder *ph)
 	uintmax_t	n;
 	int			base;
 	int			i;
-	char		buffer[32];
+	char		buffer[128];
 	const char	*hex = "0123456789abcdef";
 
 	base = get_base((*ph).type);
 	trim_bits(ph);
 	check_negative(ph);
-	i = 31;
+	i = 127;
 	buffer[i--] = 0;
 	n = (*ph).n;
 	if (n == 0)

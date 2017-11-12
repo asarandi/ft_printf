@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/01 15:55:33 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/10 15:54:57 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/11 19:14:00 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ void	get_placeholder_length(char **fmt, t_placeholder *placeholder)
 
 void	get_placeholder_type(char **fmt, t_placeholder *ph)
 {
-	const char	*valid_types = "dDiuUoOxXpcCsSfF";
+	const char	*valid_types = "dDiuUoOxXpcCsSfFkb";
 	int			i;
 
 	i = 0;
