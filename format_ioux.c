@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   format_ioxf.c                                      :+:      :+:    :+:   */
+/*   format_ioux.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/10 14:52:30 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/11 03:39:25 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/12 00:49:31 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,27 +58,9 @@ void	format_hex(t_placeholder *ph)
 		ft_strtoupper((char *)(*ph).output);
 }
 
-void	format_double(t_placeholder *ph)
+void	format_unsigned_int(t_placeholder *ph)
 {
-	(*ph).output = (unsigned char *)(*ph).float_suffix;
-	if ((*ph).have_precision == 0)
-	{
-		if (ft_strlen((char *)(*ph).output) > 6)
-			(*ph).output[6] = 0;
-		while (ft_strlen((char *)(*ph).output) < 6)
-			string_suffix(ph, "0");
-	}
 	(*ph).char_count = ft_strlen((char *)(*ph).output);
 	add_precision(ph);
-	string_prefix(ph, ".");
-	if (((*ph).have_precision) && ((*ph).precision == 0))
-	{
-		(*ph).output[0] = 0;
-		(*ph).char_count = 0;
-	}
-	string_prefix(ph, (*ph).float_prefix);
-	free((*ph).float_prefix);
-	if ((*ph).sign == '-')
-		string_prefix(ph, "-");
 	add_width(ph);
 }

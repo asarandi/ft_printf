@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 09:37:11 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/11 22:30:07 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/12 00:59:00 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int				main_routine(t_cc restrict *format, va_list *ap, int written);
 int				wchar_to_utf8(unsigned int wchar, unsigned char *output);
 size_t			ft_strlen(const char *s);
 unsigned char	*get_char(va_list *ap, t_placeholder *ph);
-unsigned char	*get_double(va_list *ap, t_placeholder *ph);
+void			get_double(va_list *ap, t_placeholder *ph);
 unsigned char	*get_string(va_list *ap, t_placeholder *ph);
 unsigned char	*get_wchar(va_list *ap, t_placeholder *ph);
 unsigned char	*get_wide_string(va_list *ap, t_placeholder *ph);
