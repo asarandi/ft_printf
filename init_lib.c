@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/10 14:57:49 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/11 19:16:55 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/13 14:00:38 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	format_pointer(t_placeholder *ph)
 	(*ph).char_count = ft_strlen((char *)(*ph).output);
 	add_precision(ph);
 	(*ph).char_count = ft_strlen((char *)(*ph).output);
-	if (((*ph).flags & FLAG_HASHTAG) || ((*ph).flags & FLAG_ZERO))
+	if ((*ph).flags & FLAG_ZERO)
 		add_width(ph);
 	string_prefix(ph, "0x");
 	(*ph).char_count = ft_strlen((char *)(*ph).output);
@@ -62,6 +62,8 @@ void	parse_placeholder(char **fmt, va_list *ap, t_placeholder *ph)
 	(*ph).location = *fmt;
 	get_placeholder_flags(fmt, ph);
 	get_placeholder_width(fmt, ap, ph);
+	if ((*ph).flags & FLAG_MINUS)
+		(*ph).flags &= ~(1 << 1);
 	get_placeholder_precision(fmt, ap, ph);
 	get_placeholder_length(fmt, ph);
 	get_placeholder_type(fmt, ph);
