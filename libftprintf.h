@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 09:37:11 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/12 00:59:00 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/12 17:37:39 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,9 @@ typedef	struct	s_placeholder
 typedef t_placeholder	t_ph;
 typedef const char	*t_cc;
 
+void			float_cosmetics(t_placeholder *ph);
+int				float_round_suffix(char *str, int f);
+char			*float_round_prefix(char *str, int f);
 int				ft_strmatch(char *little, char *big);
 int				check_more_colors(char *str);
 int				check_colors(char *str);

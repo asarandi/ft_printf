@@ -6,11 +6,39 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/10 14:38:04 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/10 20:59:36 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/12 17:46:01 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
+
+/*
+** uncomment this function to print multi-byte utf8 sequences
+** (passes moulitest)
+**
+**unsigned char	*get_wchar(va_list *ap, t_placeholder *ph)
+**{
+**	unsigned char	buffer[5];
+**	unsigned int	wchar;
+**	unsigned char	*result;
+**	int				i;
+**
+**	i = 0;
+**	while (i < 5)
+**		buffer[i++] = 0;
+**	wchar = (unsigned int)va_arg(*ap, wchar_t);
+**	(*ph).char_count = wchar_to_utf8(wchar, buffer);
+**	if ((result = ft_memalloc(8)) == NULL)
+**		return (NULL);
+**	i = 0;
+**	while (i < 5)
+**	{
+**		result[i] = buffer[i];
+**		i++;
+**	}
+**	return (result);
+**}
+*/
 
 unsigned char	*get_wchar(va_list *ap, t_placeholder *ph)
 {

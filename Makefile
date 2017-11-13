@@ -6,12 +6,12 @@
 #    By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/30 09:00:12 by asarandi          #+#    #+#              #
-#    Updated: 2017/11/12 03:00:46 by asarandi         ###   ########.fr        #
+#    Updated: 2017/11/12 17:46:29 by asarandi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= libftprintf.a
-CFLAGS	= -g -Wall -Werror -Wextra -I. -c
+CFLAGS	= -Wall -Werror -Wextra -I. -c
 FILES	=	add_precision.c \
 			add_width.c \
 			format_ioux.c \
@@ -28,7 +28,8 @@ FILES	=	add_precision.c \
 			string_op.c \
 			wchar_to_utf8.c \
 			iso8601.c \
-			colors.c
+			colors.c \
+			float_cosmetics.c
 OBJ		= $(FILES:%.c=%.o)
 INC		= libftprintf.h
 
