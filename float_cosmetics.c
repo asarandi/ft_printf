@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 17:32:44 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/12 17:35:12 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/12 17:51:27 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,7 @@ int		float_round_suffix(char *str, int f)
 			return (f);
 		str[i] = str[i] + 1;
 		if (str[i] == '9' + 1)
-		{
 			str[i] = '0';
-		}
 		else
 			f = 0;
 	}
@@ -67,9 +65,7 @@ char	*float_round_prefix(char *str, int f)
 		}
 		str[i] = str[i] + 1;
 		if (str[i] == '9' + 1)
-		{
 			str[i] = '0';
-		}
 		else
 			f = 0;
 	}
