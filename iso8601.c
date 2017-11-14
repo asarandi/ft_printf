@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/11 18:06:01 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/11 18:24:35 by asarandi         ###   ########.fr       */
+/*   Updated: 2017/11/14 00:49:21 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	iso_time(uintmax_t t)
 		leaps = ((t / 31536000) + 2) / 4;
 	if (((t / 31536000) + 2) % 4 == 0)
 		is_leap = 1;
-	day = ((t / 86400) - (leaps - is_leap)) % 365;
+	day = ((t / 86400) - (leaps + is_leap)) % 365;
 	day += 1;
 	mo = 0;
 	while (day > months[mo])
@@ -35,7 +35,7 @@ void	iso_time(uintmax_t t)
 		if ((is_leap) && (mo == 1))
 			day -= 1;
 	}
-	mo++;
-	ft_printf("%d-%02d-%02d", (t / 31536000) + 1970, mo, day);
+	leaps = (leaps + is_leap) * 86400;
+	ft_printf("%d-%02d-%02d", ((t - leaps) / 31536000) + 1970, ++mo, day);
 	ft_printf("T%02d:%02d:%02d+00:00", t / 3600 % 24, t / 60 % 60, t % 60);
 }
