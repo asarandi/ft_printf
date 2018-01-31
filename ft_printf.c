@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 09:21:32 by asarandi          #+#    #+#             */
-/*   Updated: 2017/11/11 23:59:10 by asarandi         ###   ########.fr       */
+/*   Updated: 2018/01/31 04:15:19 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int		ft_printf(const char *restrict format, ...)
 			count += color_routine(&format);
 		if ((*format == '%') && (*format + 1))
 			count += main_routine(&format, &ap, count);
-		else
+		else if (*format)
 		{
 			write(1, format++, 1);
 			count++;
