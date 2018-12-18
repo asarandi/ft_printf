@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 NAME	= libftprintf.a
-CFLAGS	=  -Wall -Werror -Wextra -I. -c
+CFLAGS	=  -Wall -Werror -Wextra -Wno-div-by-zero -I. -c
 FILES	=	add_precision.c \
 			add_width.c \
 			format_ioux.c \
